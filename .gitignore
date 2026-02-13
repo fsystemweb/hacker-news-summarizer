@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+
+# Editor-specific files
+.idea/
+*.swp
+*.bak
+*.swo
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+.flaskenv
+
+# Haystack generated files
+*.png
+*.json

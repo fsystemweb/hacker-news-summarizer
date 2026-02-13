@@ -1,0 +1,6 @@
+haystack-ai>=2.24.1
+python-dotenv
+click
+aiohttp
+trafilatura
+jinja2
