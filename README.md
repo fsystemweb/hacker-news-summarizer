@@ -7,7 +7,7 @@ A command-line interface tool to fetch the newest stories from Hacker News, extr
 - Fetches the latest K stories from Hacker News.
 - Asynchronously downloads and extracts clean article text using `trafilatura`.
 - Utilizes Haystack 2.x for building robust LLM pipelines.
-- Generates concise one-sentence summaries with `OpenAIChatGenerator`.
+- Generates concise one-sentence summaries with `OpenAIGenerator`.
 - Supports various command-line options for customization (`--last-k`, `--model`, `--temperature`, `--verbose`, `--json`).
 - Gracefully handles missing URLs, 404s, paywalls, and parsing failures.
 - Outputs beautifully formatted summaries or machine-readable JSON.
@@ -31,8 +31,8 @@ project/
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/hn-summarizer.git
-   cd hn-summarizer
+   git clone https://github.com/fsystemweb/hacker-news-summarizer.git
+   cd hacker-news-summarizer
    ```
 
 2. **Create a virtual environment (recommended):**
@@ -98,7 +98,7 @@ The tool is built with a Haystack 2.x pipeline that orchestrates the following c
 
 1.  **`HackerNewsNewestFetcher` (custom component):** Fetches the latest stories from the Hacker News Firebase API, asynchronously downloads and extracts article text, and creates Haystack `Document` objects.
 2.  **`PromptBuilder`:** Prepares the prompt for the LLM using a Jinja2 template and the fetched document content and metadata.
-3.  **`OpenAIChatGenerator`:** Interacts with the OpenAI API to generate one-sentence summaries based on the provided prompt.
+3.  **`OpenAIGenerator`:** Interacts with the OpenAI API to generate one-sentence summaries based on the provided prompt.
 
 ### Pipeline Diagram (Conceptual)
 
@@ -106,15 +106,8 @@ The tool is built with a Haystack 2.x pipeline that orchestrates the following c
 graph TD
     A[Start] --> B{HackerNewsNewestFetcher};
     B --> C[PromptBuilder];
-    C --> D[OpenAIChatGenerator];
+    C --> D[OpenAIGenerator];
     D --> E[End];
-```
-
-To visualize the actual pipeline after running, you could use:
-```python
-# In pipeline.py or a debug script
-# pipe.draw("pipeline.png")
-# pipe.show()
 ```
 
 ## Development

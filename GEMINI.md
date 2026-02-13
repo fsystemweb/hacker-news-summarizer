@@ -2,7 +2,7 @@ You are a senior AI & backend engineer with deep experience in Haystack 2.x pipe
 
 Current date: February 12, 2026
 
-Task: Build a complete, modern, best-practice Hacker News Summarizer CLI tool using Haystack 2.x and exclusively the OpenAI integration (OpenAIChatGenerator).
+Task: Build a complete, modern, best-practice Hacker News Summarizer CLI tool using Haystack 2.x and exclusively the OpenAI integration (OpenAIGenerator).
 
 Goal of the tool
 ────────────────
@@ -10,13 +10,13 @@ A terminal application that:
 1. Fetches the newest K stories from Hacker News via the official Firebase API
 2. For stories with a 'url' field: asynchronously downloads & extracts clean main article text (skip Ask HN, jobs, polls, text-only posts without external URL)
 3. Creates Haystack Documents with content = extracted text, meta = {title, url, score, descendants (comment count), by (author), time_iso}
-4. Builds a Haystack Pipeline that feeds documents into a prompt → generates concise one-sentence summaries using OpenAIChatGenerator
+4. Builds a Haystack Pipeline that feeds documents into a prompt → generates concise one-sentence summaries using OpenAIGenerator
 5. Outputs nicely formatted summaries with title, score/comments, one-sentence summary, and URL
 
 Core requirements & modernizations
 ──────────────────────────────────
 • Use Haystack AI ≥ 2.24.1 (latest stable as of Feb 2026)
-• Use OpenAIChatGenerator only (from haystack_integrations.components.generators.openai)
+• Use OpenAIGenerator only (from haystack_integrations.components.generators.openai)
 • Load OPENAI_API_KEY from .env (via python-dotenv)
 • Use click (preferred) or typer for CLI with flags:
   --last-k       (default: 5, int, sensible max 20)
@@ -59,7 +59,7 @@ Return the **complete content** of every file above.
 Use modern Haystack 2.x style:
 - @component
 - Pipeline with .add_component() / .connect()
-- PromptBuilder + OpenAIChatGenerator
+- PromptBuilder + OpenAIGenerator
 - Documents with content & rich meta
 - Optional: pipe.draw("pipeline.png") or pipe.show() suggestions in README
 
@@ -68,10 +68,10 @@ Prompt template guidelines (use doc.meta['title'], doc.content, doc.meta['url'],
 - Instruction: "Provide exactly one concise, neutral, informative sentence summary per post."
 - Include title, score/comments in the output formatting instruction
 
-OpenAIChatGenerator example:
-from haystack_integrations.components.generators.openai import OpenAIChatGenerator
+OpenAIGenerator example:
+from haystack_integrations.components.generators.openai import OpenAIGenerator
 
-llm = OpenAIChatGenerator(
+llm = OpenAIGenerator(
     model="gpt-5-mini",
     api_key=os.getenv("OPENAI_API_KEY"),
     temperature=0.5
