@@ -1,6 +1,29 @@
-# Hacker News Summarizer CLI
+<h1 align="center">Hacker News Summarizer CLI</h1>
 
-A command-line interface tool to fetch the newest stories from Hacker News, extract article content, and generate concise one-sentence summaries using Haystack 2.x and OpenAI.
+<p align="center">
+  <img src="public/logo.jpeg" alt="logo" width="180px" height="120px"/>
+  <br>
+  <em>A command-line interface tool to fetch the newest stories from Hacker News, extract article content, </br>
+ and generate concise one-sentence summaries using Haystack 2.x and OpenAI.
+</em>
+  <br>
+</p>
+
+
+<div align="center">
+
+![Python](https://img.shields.io/badge/Python-3.10+-blue)
+![Haystack](https://img.shields.io/badge/Haystack-2.24.1+-green)
+![OpenAI](https://img.shields.io/badge/OpenAI-API-black)
+![Click](https://img.shields.io/badge/CLI-Click-yellow)
+![aiohttp](https://img.shields.io/badge/HTTP-aiohttp-lightgrey)
+![Trafilatura](https://img.shields.io/badge/Content-Extraction-orange)
+![Jinja2](https://img.shields.io/badge/Templates-Jinja2-red)
+![dotenv](https://img.shields.io/badge/Env-python--dotenv-blueviolet)
+
+</div>
+
+<hr>
 
 ## Features
 
