@@ -6,7 +6,7 @@ Hacker News Summarizer is a Python CLI that fetches the newest Hacker News stori
 - Install: `python -m venv .venv`, then `pip install -r requirements.txt`
 - Run: `python main.py` (help: `python main.py --help`)
 - Options: `--last-k` (1 to 20, default 5), `--model`, `--temperature`, `--verbose`, `--json`
-- Tests: none yet. Lint: none configured.
+- Tests: `pytest` (mocked HN API + CLI; install `-r requirements-dev.txt` too). CI runs them on push/PR. Lint: none configured.
 
 ## Conventions
 - Stack: Python 3.10+, Haystack (`haystack-ai>=2.24.1`), click, aiohttp, trafilatura, jinja2, python-dotenv. Dependencies are unpinned in `requirements.txt`.
@@ -17,7 +17,7 @@ Hacker News Summarizer is a Python CLI that fetches the newest Hacker News stori
 - `GEMINI.md` is the original generation prompt for another tool, not a spec for current behavior.
 
 ## Boundaries
-- Always: re-read `main.py` after editing the click options; the `json` flag parameter shadows the `json` module there, so `json.dumps` under `--json` fails until one is renamed.
+- Always: re-read `main.py` after editing the click options; the `--json` flag maps to the `as_json` parameter. Do not rename it to `json` or it shadows the `json` module and breaks the `--json` output.
 - Ask first: adding a dependency, changing CLI flags or defaults, switching away from OpenAI.
 - Ask first: running `python main.py`, since it calls the Hacker News and OpenAI APIs and needs a key.
 - Never: commit secrets or read .env files.

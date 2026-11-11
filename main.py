@@ -42,10 +42,11 @@ load_dotenv()
 )
 @click.option(
     "--json",
+    "as_json",
     is_flag=True,
     help="Output machine-readable JSON array instead of pretty text.",
 )
-def main(last_k: int, model: str, temperature: float, verbose: bool, json: bool):
+def main(last_k: int, model: str, temperature: float, verbose: bool, as_json: bool):
     """
     Hacker News Summarizer CLI: Fetches the newest K stories, extracts article text,
     and generates concise one-sentence summaries using Haystack 2.x and OpenAI.
@@ -117,7 +118,7 @@ def main(last_k: int, model: str, temperature: float, verbose: bool, json: bool)
     if verbose:
         click.echo(f"Total execution time: {duration:.2f} seconds")
 
-    if json:
+    if as_json:
         click.echo(json.dumps(summaries, indent=2))
     else:
         if summaries:
