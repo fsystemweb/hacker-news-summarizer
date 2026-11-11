@@ -16,20 +16,29 @@ class HackerNewsNewestFetcher:
     asynchronously download and extract main article text, and create Haystack Documents.
     """
 
-    def __init__(self, verbose: bool = False):
+    def __init__(self, verbose: bool = False, article_fetch_timeout: float = 10.0, story_fetch_timeout: float = 5.0):
         """
         Initializes the HackerNewsNewestFetcher.
 
         :param verbose: If True, prints detailed logs about skipped articles and errors.
+        :param article_fetch_timeout: Timeout in seconds for fetching article pages.
+        :param story_fetch_timeout: Timeout in seconds for fetching story/item identifiers and details from the HN API.
         """
         self.hn_api_base = "https://hacker-news.firebaseio.com/v0"
         self.verbose = verbose
+        self.article_fetch_timeout = article_fetch_timeout
+        self.story_fetch_timeout = story_fetch_timeout
 
     def to_dict(self) -> Dict[str, Any]:
         """
         Serializes the component to a dictionary.
         """
-        return default_to_dict(self, verbose=self.verbose)
+        return default_to_dict(
+            self,
+            verbose=self.verbose,
+            article_fetch_timeout=self.article_fetch_timeout,
+            story_fetch_timeout=self.story_fetch_timeout,
+        )
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "HackerNewsNewestFetcher":
@@ -47,7 +56,7 @@ class HackerNewsNewestFetcher:
         :return: The text content of the response, or None if an error occurs.
         """
         try:
-            async with session.get(url, timeout=10) as response:
+            async with session.get(url, timeout=self.article_fetch_timeout) as response:
                 response.raise_for_status()  # Raise an exception for HTTP errors (4xx or 5xx)
                 return await response.text()
         except aiohttp.ClientError as e:
@@ -98,7 +107,7 @@ class HackerNewsNewestFetcher:
         """
         url = f"{self.hn_api_base}/item/{story_id}.json"
         try:
-            async with session.get(url, timeout=5) as response:
+            async with session.get(url, timeout=self.story_fetch_timeout) as response:
                 response.raise_for_status()
                 return await response.json()
         except aiohttp.ClientError as e:
@@ -167,7 +176,7 @@ class HackerNewsNewestFetcher:
             try:
                 # Fetch top story IDs
                 top_stories_url = f"{self.hn_api_base}/newstories.json"
-                async with session.get(top_stories_url, timeout=5) as response:
+                async with session.get(top_stories_url, timeout=self.story_fetch_timeout) as response:
                     response.raise_for_status()
                     top_story_ids = await response.json()
             except aiohttp.ClientError as e:

@@ -1,4 +1,4 @@
-haystack-ai>=2.24.1
+haystack-ai>=2.24.1,<3.0.0  # code uses the v2 API (haystack.components.generators.openai)
 python-dotenv
 click
 aiohttp
